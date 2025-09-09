@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Casino - Demo Social Gaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #00ffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff00ff;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.5);
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #00ffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            border-color: #ff00ff;
+            background: rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            color: #cccccc;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.4);
+        }
+
+        .slot-container {
+            margin: 4rem auto;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .slot-machine {
+            background: linear-gradient(145deg, #333, #111);
+            border: 4px solid #ff00ff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            position: relative;
+        }
+
+        .slot-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .reel {
+            width: 80px;
+            height: 80px;
+            background: #000;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: spinReel 0.5s ease-in-out;
+        }
+
+        @keyframes spinReel {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .spin-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #ffff00, #ff00ff);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 255, 0, 0.4);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .top-players {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+        }
+
+        .top-players h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #ff00ff;
+            font-size: 2rem;
+        }
+
+        .player-list {
+            list-style: none;
+        }
+
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid #ff00ff;
+        }
+
+        .player-rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffff00;
+            min-width: 40px;
+        }
+
+        .player-info {
+            flex-grow: 1;
+            margin-left: 1rem;
+        }
+
+        .player-name {
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .player-score {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .game-card:hover::before {
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.3);
+            border-color: #ff00ff;
+        }
+
+        .game-card h3 {
+            color: #ff00ff;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .game-card p {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .developer-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .developer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .developer-details h3 {
+            color: #ff00ff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-details p {
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-details a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+
+        .developer-details a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+        }
+
+        .back-home {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid #ff00ff;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background: rgba(255, 0, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #ff00ff;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 0, 255, 0.2);
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .faq-answer.open {
+            padding: 1rem;
+            max-height: 500px;
+        }
+
+        .faq-toggle {
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #333, #222);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff00ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #00ffff;
+            font-size: 0.9rem;
+        }
+
+        .news-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #ff00ff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .news-item {
+            border-bottom: 1px solid #333;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .news-date {
+            color: #ff00ff;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-excerpt {
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid #ff00ff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff00ff;
+        }
+
+        .footer-text {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        .responsible-gaming {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff6666;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #ff6666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .developer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 2px solid #ff00ff;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .slot-display {
+                gap: 0.5rem;
+            }
+
+            .reel {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .page-content {
+                padding: 1rem;
+            }
+
+            .developer-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 0.5rem;
+            }
+
+            .hero {
+                padding: 1.5rem 0.5rem;
+            }
+
+            .slot-container {
+                padding: 1rem;
+            }
+
+            .slot-machine {
+                padding: 1rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">🎰 RETRO CASINO</div>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('games')">Games</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('features')">Features</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page active" id="home">
+            <section class="hero">
+                <h1>Welcome to the World of Retro Casino!</h1>
+                <p>Step back in time to the golden age of gaming! Experience the thrill of classic 80s-style casino games with modern technology. No deposits, no real money, just pure nostalgic entertainment. Play for free and enjoy the neon-soaked atmosphere of retro gaming!</p>
+                <button class="cta-button" onclick="startDemo()">Start Playing Now</button>
+            </section>
+
+            <div class="slot-container">
+                <div class="slot-machine">
+                    <div class="slot-display">
+                        <div class="reel" id="reel1">🍒</div>
+                        <div class="reel" id="reel2">🍋</div>
+                        <div class="reel" id="reel3">🍊</div>
+                    </div>
+                    <button class="spin-btn" onclick="spinSlot()" id="spinBtn">SPIN THE REELS</button>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 style="text-align: center; color: #ff00ff; margin-bottom: 2rem;">Platform Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">15,847</div>
+                        <div class="stat-label">Active Players</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2.3M</div>
+                        <div class="stat-label">Games Played</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98.5%</div>
+                        <div class="stat-label">Player Satisfaction</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support Available</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-players">
+                <h2>🏆 Top Players This Week</h2>
+                <ul class="player-list">
+                    <li class="player-item">
+                        <span class="player-rank">1</span>
+                        <div class="player-info">
+                            <span class="player-name">GoalMaster2024</span>
+                        </div>
+                        <span class="player-score">2,847,500 pts</span>
+                    </li>
+                    <li class="player-item">
+                        <span class="player-rank">2</span>
+                        <div class="player-info">
+                            <span class="player-name">ChampionsSlots</span>
+                        </div>
+                        <span class="player-score">2,156,800 pts</span>
+                    </li>
+                    <li class="player-item">
+                        <span class="player-rank">3</span>
+                        <div class="player-info">
+                            <span class="player-name">LuckyStriker</span>
+                        </div>
+                        <span class="player-score">1,923,400 pts</span>
+                    </li>
+                    <li class="player-item">
+                        <span class="player-rank">4</span>
+                        <div class="player-info">
+                            <span class="player-name">SpeedSpinner</span>
+                        </div>
+                        <span class="player-score">1,678,200 pts</span>
+                    </li>
+                    <li class="player-item">
+                        <span class="player-rank">5</span>
+                        <div class="player-info">
+                            <span class="player-name">HotStreak99</span>
+                        </div>
+                        <span class="player-score">1,445,700 pts</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="news-section">
+                <h2 style="text-align: center; color: #ff00ff; margin-bottom: 2rem;">Latest Updates</h2>
+                <div class="news-item">
+                    <div class="news-date">March 15, 2024</div>
+                    <div class="news-title">New Retro Tournament Mode Released!</div>
+                    <div class="news-excerpt">Experience competitive gaming with our new tournament system featuring weekly challenges and exclusive retro-themed rewards.</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">March 10, 2024</div>
+                    <div class="news-title">Mobile Experience Enhanced</div>
+                    <div class="news-excerpt">Our mobile platform now supports improved touch controls and optimized graphics for better gameplay on smartphones and tablets.</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">March 5, 2024</div>
+                    <div class="news-title">Community Milestone Reached</div>
+                    <div class="news-excerpt">We've officially reached 15,000 active players! Thank you to our amazing community for making Retro Casino a success.</div>
+                </div>
+            </div>
+
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3>🎰 Classic Slots</h3>
+                    <p>Experience the authentic feel of vintage slot machines with pixelated graphics and retro sound effects.</p>
+                    <button class="cta-button" onclick="playGame('slots')">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <h3>🃏 Video Poker</h3>
+                    <p>Test your skills with our retro-style video poker games featuring classic 8-bit graphics.</p>
+                    <button class="cta-button" onclick="playGame('poker')">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <h3>🎲 Dice Games</h3>
+                    <p>Roll the dice in our collection of vintage-inspired dice games with neon aesthetics.</p>
+                    <button class="cta-button" onclick="playGame('dice')">Play Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="games">
+            <div class="page-content">
+                <h1 class="page-title">🎮 Game Collection</h1>
+                <a href="#" class="back-home" onclick="showPage('home')">← Back to Home</a>
+                
+                <div class="content-section">
+                    <h3>🎰 Slot Games</h3>
+                    <p>Dive into our collection of retro-themed slot games featuring classic fruit symbols, lucky sevens, and nostalgic sound effects. Each game is designed with authentic 80s aesthetics and pixel-perfect graphics.</p>
+                    <div class="games-grid">
+                        <div class="game-card">
+                            <h3>🍒 Fruit Mania</h3>
+                            <p>Classic 3-reel slot with fruity symbols and retro sound effects.</p>
+                            <button class="cta-button" onclick="playGame('fruit-mania')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>7️⃣ Lucky Sevens</h3>
+                            <p>Hit the jackpot with lucky 7s in this vintage-style slot machine.</p>
+                            <button class="cta-button" onclick="playGame('lucky-sevens')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>💎 Diamond Jackpot</h3>
+                            <p>Sparkling diamonds and big wins in this glittering slot game.</p>
+                            <button class="cta-button" onclick="playGame('diamond-jackpot')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🌟 Neon Nights</h3>
+                            <p>Experience the ultimate 80s slot with synthwave music and neon effects.</p>
+                            <button class="cta-button" onclick="playGame('neon-nights')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🎪 Retro Carnival</h3>
+                            <p>Step right up to this carnival-themed slot with vintage circus vibes.</p>
+                            <button class="cta-button" onclick="playGame('retro-carnival')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🚀 Space Invaders Slots</h3>
+                            <p>Combine classic arcade gaming with slot machine excitement.</p>
+                            <button class="cta-button" onclick="playGame('space-invaders')">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🃏 Card Games</h3>
+                    <p>Challenge yourself with vintage-style card games including Video Poker, Blackjack, and more. Experience the golden age of casino gaming with our authentic retro interfaces.</p>
+                    <div class="games-grid">
+                        <div class="game-card">
+                            <h3>🎴 Video Poker</h3>
+                            <p>Test your poker skills against our retro-style machine.</p>
+                            <button class="cta-button" onclick="playGame('video-poker')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>♠️ Blackjack</h3>
+                            <p>Beat the dealer in this classic 21 game with 80s flair.</p>
+                            <button class="cta-button" onclick="playGame('blackjack')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🃏 Retro Baccarat</h3>
+                            <p>Experience the elegance of Baccarat with neon styling.</p>
+                            <button class="cta-button" onclick="playGame('baccarat')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🎯 Hi-Lo Challenge</h3>
+                            <p>Predict if the next card will be higher or lower in this retro card game.</p>
+                            <button class="cta-button" onclick="playGame('hi-lo')">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎲 Table Games</h3>
+                    <p>Enjoy classic table games reimagined with 80s flair. From dice games to roulette, each game features neon colors and synthesizer soundtracks.</p>
+                    <div class="games-grid">
+                        <div class="game-card">
+                            <h3>🎯 Roulette</h3>
+                            <p>Place your bets on the neon roulette wheel for retro thrills.</p>
+                            <button class="cta-button" onclick="playGame('roulette')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🎲 Craps</h3>
+                            <p>Roll the dice in this vibrant 80s-style craps game.</p>
+                            <button class="cta-button" onclick="playGame('craps')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🎪 Wheel of Fortune</h3>
+                            <p>Spin the colorful wheel for prizes in this retro game show experience.</p>
+                            <button class="cta-button" onclick="playGame('wheel-fortune')">Play Now</button>
+                        </div>
+                        <div class="game-card">
+                            <h3>🎯 Arcade Darts</h3>
+                            <p>Test your aim in this neon-lit arcade dart throwing game.</p>
+                            <button class="cta-button" onclick="playGame('arcade-darts')">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>❓ Game FAQ</h3>
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                How do I start playing games?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Simply click the "Play Now" button on any game card. All games load instantly in your browser with no downloads required. You can start playing immediately!
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Are there any age restrictions?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Yes, you must be 18 years or older to play. While no real money is involved, we maintain age restrictions to promote responsible gaming habits.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Can I play on mobile devices?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Absolutely! All our games are optimized for mobile play. Whether you're on a smartphone or tablet, you'll enjoy the same high-quality retro gaming experience.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                How are scores calculated?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Scores are based on your performance, winning streaks, and time played. Different games have different scoring systems, but all contribute to your overall player ranking on our leaderboards.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Do I need to create an account?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                No account creation is required for casual play! However, creating a free account allows you to save your progress, compete on leaderboards, and earn achievements.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="features">
+            <div class="page-content">
+                <h1 class="page-title">✨ Features</h1>
+                <a href="#" class="back-home" onclick="showPage('home')">← Back to Home</a>
+                
+                <div class="content-section">
+                    <h3>🆓 Completely Free</h3>
+                    <p>All games are completely free to play. No deposits, no real money transactions, just pure entertainment and nostalgia.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎨 Authentic 80s Design</h3>
+                    <p>Experience authentic 80s aesthetics with neon colors, gradient backgrounds, pixel art, and synthesizer soundtracks that transport you back in time.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>📱 Fully Responsive</h3>
+                    <p>Play on any device! Our games are optimized for desktops, tablets, and mobile phones with responsive design that adapts to all screen sizes.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🔒 Safe & Secure</h3>
+                    <p>Enjoy worry-free gaming with no personal information required. Just click and play - it's that simple!</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🏆 Leaderboards & Achievements</h3>
+                    <p>Compete with players worldwide on our leaderboards and unlock achievements as you play. Show off your gaming skills!</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎵 Retro Soundtrack</h3>
+                    <p>Immerse yourself in the 80s vibe with our authentic synthesizer soundtrack that complements the visual experience perfectly.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>⚡ Instant Play Technology</h3>
+                    <p>No downloads, no installations, no waiting! All games load instantly in your browser using cutting-edge web technology.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎮 Cross-Platform Compatibility</h3>
+                    <p>Seamlessly switch between devices while maintaining your progress. Start on desktop, continue on mobile - your experience follows you everywhere.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>❓ Features FAQ</h3>
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                What makes this different from other online casinos?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Unlike traditional online casinos, we focus purely on entertainment without any real money gambling. Our retro 80s theme, combined with modern technology, creates a unique nostalgic gaming experience that's both fun and safe.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                How often do you add new games?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                We add new games regularly! Our development team releases new retro-themed games monthly, and we often update existing games with new features based on player feedback.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Can I suggest new game ideas?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Absolutely! We love hearing from our community. You can submit game suggestions through our contact form, and popular ideas often become part of our development roadmap.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Is there a limit to how much I can play?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                While there are no artificial limits, we encourage healthy gaming habits. We provide optional session timers and break reminders to help you maintain a balanced approach to gaming.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Do you support multiple languages?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Currently, our games are available in English, but we're working on adding support for multiple languages including Spanish, French, German, and others based on player demand.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="about">
+            <div class="page-content">
+                <h1 class="page-title">👨‍💻 About</h1>
+                <a href="#" class="back-home" onclick="showPage('home')">← Back to Home</a>
+                
+                <div class="content-section">
+                    <div class="developer-info">
+                        <div class="developer-avatar">NM</div>
+                        <div class="developer-details">
+                            <h3>Frontend Developer</h3>
+                            <h2>Məmmədli Nurlan</h2>
+                            <p><strong>Email:</strong> <a href="mailto:nurlanmammadli2@gmail.com">nurlanmammadli2@gmail.com</a></p>
+                            <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/nurlan-məmmədli-b6a55b308" target="_blank">www.linkedin.com/in/nurlan-məmmədli-b6a55b308</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 Project Mission</h3>
+                    <p>This project is part of a 30-day web development series focused on creating demo social casino websites. The goal is to provide entertaining, risk-free gaming experiences that capture the nostalgic feel of 80s arcade and casino culture.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🔧 Technologies Used</h3>
+                    <p>Built with modern web technologies including HTML5, CSS3, and JavaScript. Features responsive design, CSS animations, and retro-inspired visual effects that bring the 80s aesthetic to life.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎨 Design Philosophy</h3>
+                    <p>Every element is carefully crafted to evoke the golden age of gaming with authentic 80s colors, fonts, and effects. The pixel-perfect design ensures an immersive retro experience while maintaining modern usability standards.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>📅 30-Day Challenge</h3>
+                    <p>This is the second project in a 30-day series creating different demo social casino websites. Each day features a new design while maintaining the core principles of risk-free entertainment and responsible gaming messaging.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🌟 Project Timeline</h3>
+                    <p>Development began in early March 2024 with extensive research into authentic 80s design elements. The project emphasizes both visual authenticity and modern web standards, ensuring compatibility across all devices and browsers.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎮 Gaming Philosophy</h3>
+                    <p>We believe gaming should be fun, accessible, and responsible. Our platform promotes healthy gaming habits while delivering an entertaining experience that celebrates the golden era of arcade and casino culture.</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>❓ About FAQ</h3>
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                What inspired the retro 80s theme?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                The 80s represent a golden age of both arcade gaming and casino culture. The neon aesthetics, synthesizer music, and bold visual design of that era create a perfect atmosphere for nostalgic gaming experiences.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                How can I support this project?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                The best way to support us is by playing our games, sharing feedback, and spreading the word to friends who might enjoy retro gaming. Your engagement helps us improve and expand our offerings.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Are you planning to monetize the platform?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Our primary focus is on providing free entertainment. Any future monetization would focus on optional cosmetic features or premium themes while keeping all core games completely free to play.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Can I contribute to the development?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                While this is primarily a solo development project for the 30-day challenge, we welcome feedback, bug reports, and feature suggestions through our contact form.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="contact">
+            <div class="page-content">
+                <h1 class="page-title">📧 Contact</h1>
+                <a href="#" class="back-home" onclick="showPage('home')">← Back to Home</a>
+                
+                <div class="content-section">
+                    <h3>Get in Touch</h3>
+                    <p>Have questions, suggestions, or just want to say hello? Feel free to reach out!</p>
+                    
+                    <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" style="width: 100%; padding: 0.8rem; background: rgba(0, 0, 0, 0.5); border: 2px solid #00ffff; border-radius: 8px; color: #fff; font-family: 'Courier New', monospace;">
+                                <option value="general">General Inquiry</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="collaboration">Collaboration</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="content-section">
+                    <h3>📍 Quick Info</h3>
+                    <p><strong>Developer:</strong> Məmmədli Nurlan</p>
+                    <p><strong>Email:</strong> <a href="mailto:nurlanmammadli2@gmail.com">nurlanmammadli2@gmail.com</a></p>
+                    <p><strong>Response Time:</strong> Within 24 hours</p>
+                    <p><strong>Available:</strong> Monday - Friday, 9 AM - 6 PM</p>
+                    <p><strong>Time Zone:</strong> Azerbaijan Time (AZT, UTC+4)</p>
+                </div>
+
+                <div class="content-section">
+                    <h3>🎯 What We'd Love to Hear About</h3>
+                    <ul style="color: #cccccc; line-height: 1.6; margin-left: 2rem;">
+                        <li>Bug reports and technical issues</li>
+                        <li>Game suggestions and feature requests</li>
+                        <li>Feedback on user experience</li>
+                        <li>Ideas for new retro-themed content</li>
+                        <li>Collaboration opportunities</li>
+                        <li>General questions about the project</li>
+                    </ul>
+                </div>
+
+                <div class="content-section">
+                    <h3>❓ Contact FAQ</h3>
+                    <div class="faq-section">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                How quickly will I receive a response?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                We aim to respond to all inquiries within 24 hours during business days. For urgent technical issues, we often respond much faster, sometimes within a few hours.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                What information should I include in bug reports?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Please include your device type, browser version, the specific game where the issue occurred, and a detailed description of what happened. Screenshots are also very helpful if possible.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Can I suggest new game ideas?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Absolutely! We love creative ideas that fit our retro 80s theme. Please provide as much detail as possible about your game concept, including visual style and gameplay mechanics.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                Do you offer technical support for gameplay issues?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                Yes! If you're experiencing technical difficulties with any of our games, please contact us with details about the issue and we'll help troubleshoot the problem.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" onclick="showPage('about')">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Responsible Gaming</a>
+            </div>
+            <div class="footer-text">
+                © 2025 Retro Casino. All rights reserved. | Adults Only 18+ | Play Responsibly
+            </div>
+            <div class="responsible-gaming">
+                🚨 This is a social casino featuring free-to-play games for entertainment purposes only. 
+                If you feel that your gaming habits are becoming problematic, please seek help from appropriate resources and 
+                consider taking a break from gaming activities.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('navMenu').classList.remove('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            answer.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '⭐', '💎', '7️⃣'];
+        let isSpinning = false;
+
+        function spinSlot() {
+            if (isSpinning) return;
+            
+            isSpinning = true;
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true;
+            spinBtn.textContent = 'SPINNING...';
+            
+            const reels = ['reel1', 'reel2', 'reel3'];
+            let completedSpins = 0;
+            
+            reels.forEach((reelId, index) => {
+                const reel = document.getElementById(reelId);
+                let spinCount = 0;
+                const maxSpins = 10 + (index * 5);
+                
+                const spinInterval = setInterval(() => {
+                    reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    reel.style.animation = 'spinReel 0.1s ease-in-out';
+                    
+                    spinCount++;
+                    if (spinCount >= maxSpins) {
+                        clearInterval(spinInterval);
+                        completedSpins++;
+                        
+                        if (completedSpins === 3) {
+                            setTimeout(() => {
+                                isSpinning = false;
+                                spinBtn.disabled = false;
+                                spinBtn.textContent = 'SPIN THE REELS';
+                                checkWin();
+                            }, 500);
+                        }
+                    }
+                }, 100 + (index * 20));
+            });
+        }
+
+        function checkWin() {
+            const reel1 = document.getElementById('reel1').textContent;
+            const reel2 = document.getElementById('reel2').textContent;
+            const reel3 = document.getElementById('reel3').textContent;
+            
+            if (reel1 === reel2 && reel2 === reel3) {
+                showWinMessage('🎉 JACKPOT! Three matching symbols! 🎉');
+            } else if (reel1 === reel2 || reel2 === reel3 || reel1 === reel3) {
+                showWinMessage('🎊 Nice! Two matching symbols! 🎊');
+            }
+        }
+
+        function showWinMessage(message) {
+            const winDiv = document.createElement('div');
+            winDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, #ff00ff, #00ffff);
+                color: #000;
+                padding: 2rem;
+                border-radius: 15px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                z-index: 10000;
+                text-align: center;
+                animation: bounce 0.6s ease-in-out;
+                box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+            `;
+            winDiv.textContent = message;
+            document.body.appendChild(winDiv);
+            
+            setTimeout(() => {
+                document.body.removeChild(winDiv);
+            }, 3000);
+        }
+
+        function startDemo() {
+            showWinMessage('🎮 Welcome to Retro Casino! Try the slot machine below! 🎮');
+        }
+
+        function playGame(gameType) {
+            const messages = {
+                'slots': '🎰 Loading Classic Slots... Enjoy the retro experience!',
+                'poker': '🃏 Starting Video Poker... Good luck!',
+                'dice': '🎲 Rolling the dice... Let the games begin!',
+                'fruit-mania': '🍒 Spinning Fruit Mania slots... Good luck!',
+                'lucky-sevens': '7️⃣ Trying your luck with Lucky Sevens...',
+                'diamond-jackpot': '💎 Sparkling diamonds coming up...',
+                'neon-nights': '🌟 Enter the neon nights... Synthwave gaming!',
+                'retro-carnival': '🎪 Welcome to the Retro Carnival!',
+                'space-invaders': '🚀 Preparing for space slot adventure!',
+                'video-poker': '🎴 Dealing cards for Video Poker...',
+                'blackjack': '♠️ Starting Blackjack game...',
+                'baccarat': '🃏 Starting elegant Baccarat game...',
+                'hi-lo': '🎯 Starting Hi-Lo Challenge...',
+                'roulette': '🎯 Spinning the roulette wheel...',
+                'craps': '🎲 Rolling the dice in Craps...',
+                'wheel-fortune': '🎪 Spinning the Wheel of Fortune...',
+                'arcade-darts': '🎯 Loading Arcade Darts...'
+            };
+            showWinMessage(messages[gameType] || '🎮 Game starting...');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            showWinMessage('📧 Message sent successfully! Thank you for contacting us!');
+            event.target.reset();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    createSparkles(this);
+                });
+            });
+        });
+
+        function createSparkles(element) {
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.cssText = `
+                                        position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: #fff;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 10;
+                    animation: sparkle 1s ease-out forwards;
+                `;
+                
+                const xPos = Math.random() * 100;
+                const yPos = Math.random() * 100;
+                sparkle.style.left = `${xPos}%`;
+                sparkle.style.top = `${yPos}%`;
+                
+                element.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode === element) {
+                        element.removeChild(sparkle);
+                    }
+                }, 1000);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkle {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 0;
+                    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+                }
+                50% {
+                    transform: scale(1) rotate(180deg);
+                    opacity: 1;
+                    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+                }
+                100% {
+                    transform: scale(0) rotate(360deg);
+                    opacity: 0;
+                    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
