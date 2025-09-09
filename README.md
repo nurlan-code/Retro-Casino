@@ -8,8 +8,6 @@
 
 > Nostalji və müasir texnologiyanın qovuşduğu 80-ci illər retro-stilli sosial kazino təcrübəsi
 
-![Retro Casino Demo](https://via.placeholder.com/800x400/1a1a2e/00ffff?text=Retro+Casino+Demo+Social+Gaming)
-
 ## ✨ Xüsusiyyətlər
 
 - 🎨 **Avtentik 80-ci illər dizaynı** - Neon rənglər, qradient fonlar və pixel art
