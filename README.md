@@ -1,30 +1,33 @@
 # Retro Casino (Project 5)
 
-Multi-page, retro-styled social casino demo. Built with HTML5, CSS3, and vanilla JavaScript. No real money, just entertainment.
+A retro‑styled, multi‑page social casino demo. No real‑money gambling — free entertainment only. Built with semantic HTML, inline CSS, and vanilla JS.
 
 ## Pages
-- `index.html` — Home: hero, slot demo, stats, top players, latest updates, and quick game cards
-- `games.html` — Games: Coming Soon placeholder
-- `features.html` — Features: highlights and FAQ
-- `about.html` — About: project + developer info and FAQ
-- `contact.html` — Contact: contact form, quick info, FAQ
-
-Each page embeds its own CSS and JS for easy portability (no external bundling needed).
+- Home: `index.html`
+- Games (Coming Soon): `games.html`
+- Features: `features.html`
+- About: `about.html`
+- Contact: `contact.html`
+- Privacy Policy: `privacy.html`
+- Terms of Service: `terms.html`
+- Responsible Gaming: `responsible.html`
 
 ## How to Run
-1. Download or clone this folder.
-2. Open `index.html` in your browser (double click or drag into a tab).
-3. Navigate via the top navigation bar.
+Open `index.html` in a modern browser. All assets are inline; no build step is required.
 
-No build steps. No dependencies.
+## Highlights
+- Responsive neon‑retro UI (80s vibe)
+- Simple slot demo on Home
+- Accessible navigation and focus styles
+- Consistent header/footer across pages
+- Contact form with client‑side toast and reset
 
-## Notes
-- Mobile menu works on small screens (☰ button).
-- Slot machine on Home is a simple, client-side demo with basic win checks.
-- Content is intentionally retro: neon gradients, pixel-ish fonts, and simple animations.
-- This is a social casino demo. It does not accept deposits or provide withdrawals.
+## Development Notes
+- Each page contains its own scoped CSS and small JS at the bottom for fast load.
+- No external dependencies; easy to host on GitHub Pages or any static server.
+
+## Responsible Play
+This is a free, social experience. If gaming affects your wellbeing, take breaks and seek help resources listed on `responsible.html`.
 
 ## License
-MIT — See main repository license if present; otherwise MIT by default.
-
-
+MIT
