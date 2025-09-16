@@ -6,11 +6,7 @@
     <title>Retro Casino - Home</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #00ffff; min-height: 100vh; overflow-x: hidden;
-        }
+        body { font-family: 'Courier New', monospace; background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); color: #00ffff; min-height: 100vh; overflow-x: hidden; }
         .header { position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); border-bottom: 2px solid #ff00ff; z-index: 1000; padding: 1rem 0; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.8rem; font-weight: bold; background: linear-gradient(45deg,#ff00ff,#00ffff,#ffff00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(255,0,255,0.5); animation: neonGlow 2s ease-in-out infinite alternate; }
@@ -77,8 +73,9 @@
             .footer-links{ flex-direction:column; gap:1rem; }
         }
     </style>
-    <link rel="preload" href="#" as="style">
     <meta name="description" content="Retro Casino - Play free retro-inspired social casino games. No real money, pure entertainment.">
+    <link rel="canonical" href="./index.html">
+    <meta name="theme-color" content="#0f3460">
 </head>
 <body>
     <header class="header">
@@ -91,6 +88,9 @@
                     <li><a href="./features.html" class="nav-link">Features</a></li>
                     <li><a href="./about.html" class="nav-link">About</a></li>
                     <li><a href="./contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="./privacy.html" class="nav-link">Privacy</a></li>
+                    <li><a href="./terms.html" class="nav-link">Terms</a></li>
+                    <li><a href="./responsible.html" class="nav-link">Responsible</a></li>
                 </ul>
                 <button class="mobile-menu-btn" id="mobileBtn">☰</button>
             </nav>
@@ -154,9 +154,9 @@
         <div class="footer-content">
             <div class="footer-links">
                 <a href="./about.html">About Us</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Responsible Gaming</a>
+                <a href="./privacy.html">Privacy Policy</a>
+                <a href="./terms.html">Terms of Service</a>
+                <a href="./responsible.html">Responsible Gaming</a>
             </div>
             <div class="footer-text">© 2025 Retro Casino. All rights reserved. | Adults Only 18+ | Play Responsibly</div>
             <div class="responsible-gaming">🚨 This is a social casino featuring free-to-play games for entertainment purposes only. If you feel your gaming habits are becoming problematic, please seek help and consider taking a break.</div>
@@ -171,7 +171,6 @@
         function showWinMessage(message){ const winDiv=document.createElement('div'); winDiv.style.cssText=`position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(45deg,#ff00ff,#00ffff);color:#000;padding:2rem;border-radius:15px;font-size:1.5rem;font-weight:bold;z-index:10000;text-align:center;animation:bounce 0.6s ease-in-out;box-shadow:0 0 30px rgba(255,0,255,0.8);`; winDiv.textContent=message; document.body.appendChild(winDiv); setTimeout(()=>{ if(winDiv.parentNode){ document.body.removeChild(winDiv);} },3000); }
         document.getElementById('spinBtn').addEventListener('click', spinSlot);
         const mobileBtn=document.getElementById('mobileBtn'); const navMenu=document.getElementById('navMenu'); mobileBtn.addEventListener('click',()=>navMenu.classList.toggle('active'));
-        // Sparkles on game cards
         document.querySelectorAll('.game-card').forEach(card=>{ card.addEventListener('mouseenter',()=>{ for(let i=0;i<5;i++){ const s=document.createElement('div'); s.style.cssText=`position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;pointer-events:none;z-index:10;animation:sparkle 1s ease-out forwards;`; s.style.left=`${Math.random()*100}%`; s.style.top=`${Math.random()*100}%`; card.appendChild(s); setTimeout(()=>{ if(s.parentNode===card){ card.removeChild(s);} },1000); } }); });
         const style=document.createElement('style'); style.textContent=`@keyframes sparkle{0%{transform:scale(0) rotate(0deg);opacity:0;box-shadow:0 0 0 rgba(255,255,255,0);}50%{transform:scale(1) rotate(180deg);opacity:1;box-shadow:0 0 10px rgba(255,255,255,0.8);}100%{transform:scale(0) rotate(360deg);opacity:0;box-shadow:0 0 0 rgba(255,255,255,0);}}`; document.head.appendChild(style);
     </script>
