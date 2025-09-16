@@ -25,14 +25,8 @@
         .developer-details p{color:#cccccc;margin-bottom:.5rem}
         .developer-details a{color:#00ffff;text-decoration:none}
         .developer-details a:hover{text-decoration:underline}
-        .faq-section{margin-top:1rem}
-        .faq-item{background:rgba(0,0,0,.2);border:1px solid #ff00ff;border-radius:10px;margin-bottom:1rem;overflow:hidden}
-        .faq-question{padding:1rem;background:rgba(255,0,255,.1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:bold;color:#ff00ff;transition:all .3s ease}
-        .faq-question:hover{background:rgba(255,0,255,.2)}
-        .faq-answer{padding:0 1rem;max-height:0;overflow:hidden;transition:all .3s ease;color:#cccccc;line-height:1.6}
-        .faq-answer.open{padding:1rem;max-height:500px}
-        .faq-toggle{font-size:1.2rem;font-weight:bold;transition:transform .3s ease}
-        .faq-toggle.open{transform:rotate(180deg)}
+        .values{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+        .value{background:rgba(0,0,0,.2);border:1px solid #00ffff;border-radius:12px;padding:1rem}
         .footer{background:rgba(0,0,0,0.9);border-top:2px solid #ff00ff;padding:2rem 0;text-align:center}
         .footer-content{max-width:1200px;margin:0 auto;padding:0 2rem}
         .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem;flex-wrap:wrap}
@@ -41,7 +35,7 @@
         @media(max-width:992px){.developer-info{flex-direction:column;text-align:center}}
         @media(max-width:768px){.nav-menu{display:none;position:absolute;top:100%;left:0;width:100%;background:rgba(0,0,0,.95);flex-direction:column;padding:1rem;border-top:2px solid #ff00ff}.nav-menu.active{display:flex}.mobile-menu-btn{display:block}.page-title{font-size:2rem}}
     </style>
-    <meta name="description" content="About Retro Casino - Mission, tech, timeline, and the developer behind the retro experience.">
+    <meta name="description" content="About Retro Casino - Mission, tech, team values, and the developer behind the retro experience.">
 </head>
 <body>
     <header class="header">
@@ -54,6 +48,9 @@
                     <li><a href="./features.html" class="nav-link">Features</a></li>
                     <li><a href="./about.html" class="nav-link active">About</a></li>
                     <li><a href="./contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="./privacy.html" class="nav-link">Privacy</a></li>
+                    <li><a href="./terms.html" class="nav-link">Terms</a></li>
+                    <li><a href="./responsible.html" class="nav-link">Responsible</a></li>
                 </ul>
                 <button class="mobile-menu-btn" id="mobileBtn">☰</button>
             </nav>
@@ -62,7 +59,7 @@
 
     <main class="main-content">
         <div class="page-content">
-            <h1 class="page-title">👨‍💻 About</h1>
+            <h1 class="page-title">👨‍💻 About Retro Casino</h1>
 
             <div class="content-section">
                 <div class="developer-info">
@@ -71,25 +68,27 @@
                         <h3>Frontend Developer</h3>
                         <h2 style="margin:.25rem 0 1rem;color:#00ffff">Məmmədli Nurlan</h2>
                         <p><strong>Email:</strong> <a href="mailto:nurlanmammadli2@gmail.com">nurlanmammadli2@gmail.com</a></p>
-                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/nurlan-məmmədli-b6a55b308" target="_blank">linkedin.com/in/nurlan-məmmədli-b6a55b308</a></p>
+                        <p><strong>LinkedIn:</strong> <a target="_blank" href="https://www.linkedin.com/in/nurlan-məmmədli-b6a55b308">linkedin.com/in/nurlan‑məmmədli‑b6a55b308</a></p>
                     </div>
+                </div>
+                <div class="values">
+                    <div class="value"><h4 style="color:#ff00ff;margin-bottom:.5rem">Player First</h4><p style="color:#cccccc">We optimize for fun, clarity, and comfort on every device.</p></div>
+                    <div class="value"><h4 style="color:#ff00ff;margin-bottom:.5rem">Safety</h4><p style="color:#cccccc">No real‑money gambling. Clear guidance and responsible play reminders.</p></div>
+                    <div class="value"><h4 style="color:#ff00ff;margin-bottom:.5rem">Craft</h4><p style="color:#cccccc">Hand‑tuned visuals, crisp interactions, and accessible markup.</p></div>
                 </div>
             </div>
 
-            <div class="content-section"><h3>🎯 Project Mission</h3><p>This series showcases 30 demo social casino websites built in 30 days. The aim is to deliver safe, risk‑free entertainment that captures the charm of the 80s arcade and casino scene.</p></div>
-            <div class="content-section"><h3>🔧 Technologies Used</h3><p>HTML5, CSS3, and vanilla JavaScript. Responsive layouts, CSS animations, and accessible components ensure modern standards.</p></div>
-            <div class="content-section"><h3>🎨 Design Philosophy</h3><p>Every element embraces neon colorways, pixel nostalgia, and bold typography to evoke the golden era—while keeping usability crisp.</p></div>
-            <div class="content-section"><h3>📅 30‑Day Challenge</h3><p>This is an expanded version of Project #2 in the series, now refactored into multi‑page routing with improved content and structure.</p></div>
-            <div class="content-section"><h3>🌟 Project Timeline</h3><p>Started March 2024. Iterated on visuals, responsiveness, and performance. In 2025, split into multiple pages and refined copy.</p></div>
-            <div class="content-section"><h3>🎮 Gaming Philosophy</h3><p>Games should be fun, accessible, and responsible. We promote healthy habits and fair, casual play.</p></div>
-
-            <div class="content-section">
-                <h3>❓ About FAQ</h3>
-                <div class="faq-section">
-                    <div class="faq-item"><div class="faq-question" onclick="toggleFAQ(this)">What inspired the retro 80s theme?<span class="faq-toggle">▼</span></div><div class="faq-answer">The era’s neon palettes, synth music, and arcades remain iconic. They pair perfectly with modern web tech for a timeless vibe.</div></div>
-                    <div class="faq-item"><div class="faq-question" onclick="toggleFAQ(this)">How can I support the project?<span class="faq-toggle">▼</span></div><div class="faq-answer">Play, share feedback, and spread the word. Your engagement fuels improvements and new releases.</div></div>
-                    <div class="faq-item"><div class="faq-question" onclick="toggleFAQ(this)">Are you planning to monetize?<span class="faq-toggle">▼</span></div><div class="faq-answer">Core games remain free. Future cosmetic upgrades or themes could be optional—and strictly non‑pay‑to‑win.</div></div>
-                    <div class="faq-item"><div class="faq-question" onclick="toggleFAQ(this)">Can I contribute?<span class="faq-toggle">▼</span></div><div class="faq-answer">While this is a solo dev series, feedback and bug reports are always welcome via the contact page.</div></div>
+            <div class="content-section"><h3>🎯 Mission</h3><p>Deliver a safe, nostalgic, and modern social casino experience that celebrates the golden 80s—neon gradients, pixel art, and synth vibes—without real‑money risk.</p></div>
+            <div class="content-section"><h3>🔧 Tech Stack</h3><p>HTML5, CSS3, and vanilla JavaScript. Progressive enhancement, responsive grids, and accessible components.</p></div>
+            <div class="content-section"><h3>📅 Roadmap</h3><p>2025 Q2: Multi‑page site • Q3: Achievements & leaderboards • Q4: New game themes and seasonal events.</p></div>
+            <div class="content-section"><h3>❓ FAQ</h3>
+                <div class="faq-item" style="background:rgba(0,0,0,.2);border:1px solid #ff00ff;border-radius:10px;margin-bottom:1rem;overflow:hidden">
+                    <div class="faq-question" onclick="toggleFAQ(this)" style="padding:1rem;background:rgba(255,0,255,.1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:bold;color:#ff00ff;transition:all .3s ease">What inspired the 80s theme?<span class="faq-toggle">▼</span></div>
+                    <div class="faq-answer" style="padding:0 1rem;max-height:0;overflow:hidden;transition:all .3s ease;color:#cccccc;line-height:1.6">Arcades, neon signage, and chiptune music—mixed with modern UX.</div>
+                </div>
+                <div class="faq-item" style="background:rgba(0,0,0,.2);border:1px solid #ff00ff;border-radius:10px;margin-bottom:1rem;overflow:hidden">
+                    <div class="faq-question" onclick="toggleFAQ(this)" style="padding:1rem;background:rgba(255,0,255,.1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:bold;color:#ff00ff;transition:all .3s ease">How can I support the project?<span class="faq-toggle">▼</span></div>
+                    <div class="faq-answer" style="padding:0 1rem;max-height:0;overflow:hidden;transition:all .3s ease;color:#cccccc;line-height:1.6">Play, share, and send feedback—your ideas shape our roadmap.</div>
                 </div>
             </div>
         </div>
@@ -99,16 +98,16 @@
         <div class="footer-content">
             <div class="footer-links">
                 <a href="./about.html">About Us</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Responsible Gaming</a>
+                <a href="./privacy.html">Privacy Policy</a>
+                <a href="./terms.html">Terms of Service</a>
+                <a href="./responsible.html">Responsible Gaming</a>
             </div>
             <div class="footer-text" style="color:#cccccc">© 2025 Retro Casino. Play Responsibly • 18+</div>
         </div>
     </footer>
 
     <script>
-        function toggleFAQ(el){const ans=el.nextElementSibling;const t=el.querySelector('.faq-toggle');ans.classList.toggle('open');t.classList.toggle('open');}
+        function toggleFAQ(el){const ans=el.nextElementSibling;const t=el.querySelector('.faq-toggle');ans.classList.toggle('open');t.classList.toggle('open');if(ans.classList.contains('open')){ans.style.maxHeight='400px';ans.style.padding='1rem'}else{ans.style.maxHeight='0';ans.style.padding='0 1rem'}}
         const mobileBtn=document.getElementById('mobileBtn'); const navMenu=document.getElementById('navMenu'); mobileBtn.addEventListener('click',()=>navMenu.classList.toggle('active'));
     </script>
 </body>
